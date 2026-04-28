@@ -1,0 +1,58 @@
+version: 2
+
+sources:
+  - name: raw
+    database: RETAIL_DW
+    schema: RAW
+    description: "Raw ingested data from source systems"
+    tables:
+      - name: customers
+        description: "Raw customer registration records"
+        columns:
+          - name: customer_id
+            description: "Unique customer identifier"
+            tests:
+              - unique
+              - not_null
+          - name: email
+            tests:
+              - not_null
+          - name: country
+            tests:
+              - not_null
+        loaded_at_field: created_at
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 48, period: hour}
+
+      - name: orders
+        description: "Raw order transactions"
+        columns:
+          - name: order_id
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            tests:
+              - not_null
+          - name: product_id
+            tests:
+              - not_null
+          - name: total_amount
+            tests:
+              - not_null
+        loaded_at_field: created_at
+        freshness:
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 24, period: hour}
+
+      - name: products
+        description: "Product catalogue"
+        columns:
+          - name: product_id
+            tests:
+              - unique
+              - not_null
+          - name: category
+            tests:
+              - not_null
