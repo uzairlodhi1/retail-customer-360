@@ -1,0 +1,44 @@
+app:
+  name: retail-customer-360
+  version: "1.0.0"
+  environment: development  # development | staging | production
+
+snowflake:
+  account: ${SNOWFLAKE_ACCOUNT}
+  user: ${SNOWFLAKE_USER}
+  password: ${SNOWFLAKE_PASSWORD}
+  database: RETAIL_DW
+  warehouse: COMPUTE_WH
+  role: DATA_ENGINEER
+  schemas:
+    raw: RAW
+    staging: STAGING
+    marts: MARTS
+
+pipeline:
+  batch_size: 100000
+  max_retries: 3
+  retry_delay_seconds: 30
+  incremental: true
+  watermark_column: updated_at
+
+data_quality:
+  enforce_schema: true
+  null_threshold_pct: 5.0     # Fail if >5% nulls on required columns
+  duplicate_threshold_pct: 1.0
+  send_alerts: false
+  alert_email: ""
+
+spark:
+  app_name: retail-customer-360
+  master: local[*]
+  config:
+    spark.sql.shuffle.partitions: "200"
+    spark.default.parallelism: "100"
+    spark.sql.adaptive.enabled: "true"
+    spark.sql.adaptive.coalescePartitions.enabled: "true"
+
+logging:
+  level: INFO
+  format: "{time:YYYY-MM-DD HH:mm:ss} | {level} | {name} | {message}"
+  file: logs/pipeline.log
