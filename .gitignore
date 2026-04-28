@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Environment & secrets
+.env
+*.local.yaml
+config/config.local.yaml
+secrets/
+*.key
+*.pem
+
+# dbt
+dbt_models/target/
+dbt_models/logs/
+dbt_models/.user.yml
+dbt_models/profiles.yml
+
+# Airflow
+airflow/logs/
+airflow/plugins/
+airflow.cfg
+airflow.db
+airflow-webserver.pid
+standalone_admin_password.txt
+unittests.cfg
+
+# Data files (use sample/ only)
+data/raw/
+data/processed/
+*.parquet
+*.orc
+*.avro
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Logs
+*.log
+logs/
